@@ -1,0 +1,88 @@
+name: Check s3 bucket privacy
+on:
+  push:
+    branches:
+      - waf
+  pull_request:
+    branches:
+      - main
+
+env:
+  AWS_REGION: us-east-1
+
+jobs:
+  setup:
+    uses: ./.github/workflows/setup.yml
+    with:
+      terraform-dir: infrastructure
+
+  check-waf:
+    runs-on: ubuntu-latest
+    needs: setup
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIR }}
+
+    steps:
+
+      - name: Get Cloudfront and WAF info
+        id: cf_waf_info
+        run: |
+          CF_DISTRIBUTION_ID=$(terraform output -raw cloudfront_id)
+          echo "cf_distribution_id=$CF_DISTRIBUTION_ID" >> $GITHUB_OUTPUT
+          echo "Cloudfront distribution ID: $CF_DISTRIBUTION_ID"
+
+      - name: Check WAF association
+        id: waf_asso
+        run: |
+          CF_ID="${{ steps.cf_waf_info.outputs.cf_distribution_id }}"
+          echo "Checking WAF association for Cloudfront distribution $CF_ID ..."
+          
+          WEBACL_ARN=$(aws wafv2 get-web-acl-for-resource \
+          --resource-arn arn:aws:cloudfront::${{ secrets.AWS_ACCOUNT_ID }}:distribution/$CF_ID \
+          --region us-east-1 \
+          --query 'WebACL.ARN' \
+          --output text 2>/dev/nul || echo "none")
+          
+          if [ "$WEBACL_ARN" = "none" ] || [ "$WEBACL_ARN" = "None"]; then
+            echo "No WAF WebACL associated with CloudFront distribution!"
+            exit 1
+          fi
+          
+          echo "WebACL is associated: $WEBACL_ARN"
+          echo "webacl_arn=$WEBACL_ARN" >> $GITHUB_OUTPUT
+
+      - name: Check manages rules
+        run: |
+          WEBACL_ARN="${{ steps.waf.outputs.webacl_arn }}"
+          echo "Checking managed rules for WebACL: $WEBACL_ARN"
+          
+          RULE_NAMES=$(aws wafv2 get-web-acl \
+            --name $(basename $WEBACL_ARN) \
+            --scope CLOUDFRONT \
+            --id $(echo $WEBACL_ARN | awk -F/ '{print $NF}') \
+            --region us-east-1 \
+            --query 'Rules[].Name' \
+            --output text)
+
+          echo "Active WAF rules:"
+          echo "$RULE_NAMES"
+
+          REQUIRED_RULES=("AWS-AWSManagedRulesCommonRuleSet" "AWS-AWSManagedRulesAmazonIpReputationList" "AWS-AWSManagedRulesKnownBadInputsRuleSet")
+          MISSING=0
+          
+          for RULE in "${REQUIRED_RULES[@]}"; do
+            if ! echo "$RULE_NAMES" | grep -q "$RULE"; then
+              echo "Missing managed rule: $RULE"
+              MISSING=1
+            else
+              echo "$RULE is active."
+            fi
+          done
+
+          if [ $MISSING -ne 0 ]; then
+            echo "Some essential AWS managed rules are missing!"
+            exit 1
+          fi
+
+          echo "All essential AWS managed rules are active."

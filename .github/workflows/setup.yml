@@ -1,0 +1,41 @@
+name: Terraform Setup
+on:
+  workflow_call:
+    inputs:
+      aws-region:
+        required: true
+        type: string
+      terraform-dir:
+        required: true
+        type: string
+
+jobs:
+  test-cloudfront:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # CHECKOUT CODE
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # CONFIGURE AWS VIA OIDC
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+        # role-to-assume: arn:aws:iam::<ACCOUNT_ID>:role/<GITHUB_ROLE_NAME>
+          aws-region: ${{ inputs.aws-region }}
+
+      # INSTALL TERRAFORM
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.5
+
+      # INITIALIZE TERRAFORM
+      - name: Terraform init
+        run: |
+          echo "Initializing terraform in '${{ inputs.terraform-dir }}'..."
+          terraform -chdir=${{ inputs.terraform-dir }} init -input=false
+          
+          echo"WORKING_DIR=${{ inputs.terraform-dir }}" >> $GITHUB_ENV

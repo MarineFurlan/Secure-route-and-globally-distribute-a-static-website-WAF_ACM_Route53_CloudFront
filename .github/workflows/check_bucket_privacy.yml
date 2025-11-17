@@ -1,0 +1,83 @@
+name: Check s3 bucket privacy
+on:
+  push:
+    branches:
+      - webdev
+  pull_request:
+    branches:
+      - main
+
+env:
+  AWS_REGION: eu-west-3
+
+jobs:
+  setup:
+    uses: ./.github/workflows/setup.yml
+    with:
+      terraform-dir: infrastructure
+
+  check-s3-privacy:
+    runs-on: ubuntu-latest
+    needs: setup
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIR }}
+
+    steps:
+
+      # GET BUCKET NAME + OAC ID FROM TERRAFORM
+      - name: Get S3 bucket name from terraform output
+        id: get_bucket
+        run: |
+          BUCKET_NAME=$(terraform output -raw s3_bucket_name)
+          CF_DISTRIBUTION=$(terraform output -raw cloudfront_id 2>/dev/null || echo "")
+          OAC_ID=$(terraform output -raw oac_id)
+          echo "bucket_name=$BUCKET_NAME" >> $GITHUB_OUTPUT
+          echo "cf_distribution=$CF_DISTRIBUTION_ID" >> $GITHUB_OUTPUT
+          echo "oac_id=$OAC_ID" >> $GITHUB_OUTPUT
+          
+          echo "Bucket name detected : $BUCKET_NAME"
+          echo "Cloudfront distribution : $CF_DISTRIBUTION"
+          echo "OAC : $OAC_ID"
+
+      # CHECK BUCKET PRIVACY
+      - name: Check S3 privacy
+        run: |
+          BUCKET_NAME = "{{ steps.get_bucket.outputs.bucket_name }}"
+          OAC_ID = "{{ steps.get_bucket.outputs.oac_id }}"
+          
+          echo "Checking bucket policy..."
+          POLICY_STATUS=$(aws s3api get-bucket-policy-status \
+            --bucket "$BUCKET_NAME" \
+            --query 'PolicyStatus.IsPublic' \
+            --output text 2>/dev/null || echo "False")
+          
+          if [ "$POLICY_STATUS" = "True" ]; then
+            echo "Bucket Policy allows public access!"
+            exit 1
+          fi
+          echo "Bucket is not publicly accessible via policy."
+          
+          echo "Checking if policy exists..."
+          POLICY_JSON=$(aws s3api get_bucket_policy \
+            --bucket "$BUCKET_NAME \
+            --query 'Policy' \
+            --output text 2>/dev/null || echo "")
+          
+          if [ -z "$POLICY_JSON" ]; then
+            echo "No bucket policy found. Ensure Terraform applies the policy for CloudFront access."
+            exit 1
+          fi
+          
+          echo "Checking CloudFront OAC principal is used..."
+          if [ -n "$OAC_ID" ]; then
+            if ! echo "$POLICY_JSON" | grep -q "cloudfront.amazonaws.com"; then
+                echo "No CloudFront OAC principal detected in bucket policy!"
+                exit 1
+            fi
+          else
+            echo "No OAI or OAC ID provided — cannot verify CloudFront linkage."
+            exit 1
+          fi
+          
+          echo "S3 bucket $BUCKET_NAME is private and secure!"

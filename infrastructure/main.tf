@@ -17,16 +17,13 @@ provider "aws" {
 }
 
 
-
-
 ### === S3 BUCKET === ###
 module "website" {
-  source                      = "./modules/website"
+  source = "./modules/website"
 
   bucket_name                 = var.bucket_name
   cloudfront_distribution_arn = module.distribution.cloudfront_arn
 }
-
 
 
 ### === CLOUDFRONT DISTRIBUTION === ###
@@ -50,21 +47,20 @@ module "distribution" {
 module "waf" {
   source = "./modules/waf"
 
-    providers = {
+  providers = {
     aws = aws.us_east_1
   }
 
-  name   = var.waf_name
+  name = var.waf_name
 
 }
 
 
-/*
 ### === GITHUB ACTIONS === ###
 module "github_oidc" {
   source        = "modules/iam_github_oidc"
-   role_name     = var.github_role_name
+  role_name     = var.github_role_name
   github_repo   = var.github_repo
   branch        = var.github_branch
-  s3_bucket_arn = module.s3.bucket_arn
-}*/
+  s3_bucket_arn = module.website.bucket_arn
+}
