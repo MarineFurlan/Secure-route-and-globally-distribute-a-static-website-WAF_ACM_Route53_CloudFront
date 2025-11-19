@@ -8,4 +8,4 @@
 /infrastructure/modules/distribution/ @team-distribution
 
 # Global config
-/ @admin-team
+* @team-admin
