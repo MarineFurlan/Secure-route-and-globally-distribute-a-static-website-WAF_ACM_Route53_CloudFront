@@ -46,6 +46,7 @@ Using IaC ensures reproducibility, version control, and automated deployments. T
 <details>
 
 <summary>See ACM attach in Cloudfront code</summary>
+
 ```terraform
 viewer_certificate {
     acm_certificate_arn      = aws_acm_certificate.cert.arn
@@ -53,6 +54,7 @@ viewer_certificate {
     minimum_protocol_version = "TLSv1.2_2021"
   }
 ```
+
 </details>
 
 :open_file_folder:[Route53](./infrastructure/modules/distribution/route53.tf) : Routing to Cloudfront
