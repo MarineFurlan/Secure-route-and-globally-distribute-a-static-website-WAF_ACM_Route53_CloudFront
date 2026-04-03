@@ -36,8 +36,8 @@ Using IaC ensures reproducibility, version control, and automated deployments. T
 
 ## 3. Architecture Overview
 <a name="#3-architecture-overview"></a>      
- <img width="919" height="651" alt="Secure_Static_Website" src="https://github.com/user-attachments/assets/38a5c607-94cd-45f9-82d9-54ac223445c0" />
-      
+ <img width="919" height="651" alt="Secure_Static_Website" src="https://github.com/user-attachments/assets/e8a1fd66-fb92-4b31-aedc-71a26f50b31c" />
+
 ### Main Components: 
 
 :open_file_folder:[Cloudfront](./infrastructur/modules/distribution/cloudfront.tf) : Distribution
