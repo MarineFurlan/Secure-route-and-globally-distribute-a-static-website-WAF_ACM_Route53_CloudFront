@@ -41,20 +41,23 @@ Using IaC ensures reproducibility, version control, and automated deployments. T
 ### Main Components: 
 
 :open_file_folder:[Cloudfront](./infrastructure/modules/distribution/cloudfront.tf) : Distribution
-<details>
-</details>
 
 :open_file_folder:[ACM](./infrastructure/modules/distribution/acm.tf) : Encryption in transit
 <details>
+
+<summary>See ACM attach in Cloudfront code</summary>
+```terraform
+viewer_certificate {
+    acm_certificate_arn      = aws_acm_certificate.cert.arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
+  }
+```
 </details>
 
 :open_file_folder:[Route53](./infrastructure/modules/distribution/route53.tf) : Routing to Cloudfront
-<details>
-</details>
 
 :open_file_folder:[WAF](./infrastructure/modules/waf/main.tf) : Defense against common web attacks
-<details>
-</details>
 
 ## 4. Features
 <a name="#4-features"></a>   
