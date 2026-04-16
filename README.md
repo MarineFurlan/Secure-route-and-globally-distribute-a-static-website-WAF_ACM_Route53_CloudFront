@@ -1,4 +1,6 @@
-# AWS Static Website Distribution : CloudFront + Route 53 + WAF + ACM
+# Secure, route and globally distribute a static website : WAF + ACM + Route53 + CloudFront
+
+**Status :** 🟡 In progress
 <br/>
 <br/>
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img width="107" height="60" alt="Amazon-Web-Services-AWS-Logo" src="https://github.com/user-attachments/assets/f7829385-3361-48fc-8099-849da5534de5" />
@@ -89,14 +91,76 @@ viewer_certificate {
 &emsp;&emsp;The distribution is deployed with Terraform, enabling fast, repeatable, automated, and version-controlled deployments.  
 Here are the main steps to reproduce the environment:  
 
-### <ins>Prerequisites:</ins>
+<br/>
+
+<details>
+<summary>Prerequisites</summary>
 - Active AWS account.   
 - AWS CLI configured.   
 - Terraform installed.
 - A domain name in route53  
-  
-### <ins>Deployment Steps:</ins>   
+</details>
 
+<br/>
+
+<details>
+<summary>Step 1 - Clone this repo</summary> 
+
+```terraform
+git clone https://github.com/MarineFurlan/Secure-route-and-globally-distribute-a-static-website-WAF_ACM_Route53_CloudFront.git
+cd Secure-route-and-globally-distribute-a-static-website-WAF_ACM_Route53_CloudFront
+```
+</details>
+
+<br/> 
+
+<details>
+<summary>Step 2 - Initialize the infrastructure</summary>  
+  
+```terraform
+terraform init
+terraform plan
+terraform apply
+```  
+```terraform
+# Expected result in CLI
+
+Apply complete!                                                                                                                                                                        
+```
+</details>
+
+<br/>
+
+Step 3 - Confirm the subscription to security alerts in your email inbox.
+
+<br/>
+
+<details>
+<summary>Step 4 - Deployment validation</summary>
+
+<br/>
+
+A serie of tests will now be executed to review the infrastructure and its integrity.
+
+<br/>
+
+<!-- Test diagram -->
+
+<br/>
+<br/>
+
+```bash
+# Run the validation tests
+bash tests.sh
+```
+```bash
+# Expected results                                                                                                                                                           
+```
+</details>
+
+<br/>
+<br/>
+<br/>
 ## 6. Pricing
 <a name="#6-pricing"></a>
 The estimate below is based on the [AWS Pricing Calculator](https://calculator.aws).  
@@ -128,3 +192,12 @@ Potential enhancements to the infrastructure include:
 <a name="#8-references"></a>   
 :link:[AWS Pricing Calculator](https://calculator.aws/#/)  
 :link:[AWS Free Tier](https://aws.amazon.com/free) 
+
+<br/>
+<br/>
+<br/>
+
+## Author
+**Furlan Marine - Certified AWS Solutions Architect - Associate** \
+📌https://www.linkedin.com/in/marinefurlan/ \
+🎓https://www.credly.com/badges/06426b31-106e-4251-b866-6da8f4200e68/linked_in?t=t7j3hl
