@@ -70,6 +70,7 @@ WAF is used to detect and block commo web attacks.
 
 <details>
 <summary>Prerequisites</summary>
+ 
 - Active AWS account.   
 - AWS CLI configured.   
 - Terraform installed.
@@ -182,6 +183,7 @@ The estimate below is based on the [AWS Pricing Calculator](https://calculator.a
 
 ## 7. Improvements & Next Steps
 <a name="#7-improvements--next-steps"></a>
+
 Potential enhancements to the infrastructure include:  
  
 
