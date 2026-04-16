@@ -37,10 +37,7 @@ Security and monitoring are handled with WAF (Web Application Firewal) to restri
 | Components                                       | Justification                                                                               |
 |--------------------------------------------------|---------------------------------------------------------------------------------------------|
 | **Terraform**                                    | Reproducibility, version control, automated deployments, costs optimization                 | 
-|  |                               | 
-|                |  | 
-|               |                        |               
-|                      |                                                         |
+| **Only common rules for WAF protection**         | Demonstration simplicity, FreeTier scope for this service                                   | 
 
 <br/>
 <br/>
@@ -56,7 +53,7 @@ Security and monitoring are handled with WAF (Web Application Firewal) to restri
 | Components        | AWS Service                                                      | Role                                                          | 
 |-------------------|------------------------------------------------------------------|---------------------------------------------------------------|
 | **Distribution**  | CloudFront                                                       | Content delivery, caching, encrypted traffic with origin      |
-| **Security**      | WAF, ACM                                                         | In-flight website encryption, Firewall against common attacks | 
+| **Security**      | WAF, ACM, S3 bucket policy                                       | In-flight website encryption, protection against common attacks and access control| 
 | **Routing**       | Route53                                                          | Routing dns requests                                          |                       
 | **Storage**       | S3                                                               | Website files storage                                         |
 
