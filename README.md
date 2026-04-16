@@ -11,11 +11,12 @@
 - [Introduction](#1-introduction)
 - [Design Decisions](#2-design-decisions)
 - [Architecture Overview](#3-architecture-overview)
-- [Features](#4-features)
-- [Deployment Steps](#5-deployment-steps)
-- [Pricing](#6-pricing)
-- [Improvements & Next Steps](#7-improvements--next-steps)
-- [References](#8-references)
+- [Deployment](#4-deployment)
+- [Results](#5-results)
+- [Infrastructure Cleaning](#6-infrastructure-cleaning)
+- [Pricing](#7-pricing)
+- [Improvements & Next Steps](#8-improvements--next-steps)
+- [References](#9-references)
 <br/>
 <br/>
 <br/>
@@ -62,7 +63,7 @@ Security and monitoring are handled with WAF (Web Application Firewal) to restri
 <br/>
 
 ## 4. Deployment
-<a name="#5-deployment-steps"></a>
+<a name="#4-deployment"></a>
 &emsp;&emsp;The distribution is deployed with Terraform, enabling fast, repeatable, automated, and version-controlled deployments.  
 Here are the main steps to reproduce the environment:  
 
@@ -136,8 +137,34 @@ bash tests.sh
 <br/>
 <br/>
 <br/>
-## 6. Pricing
-<a name="#6-pricing"></a>
+
+## 5. Results
+<a name="#5-results"></a>
+
+Infrastructure overview :
+
+<!-- Infrastructure screenshots -->
+
+<br/>
+<br/>
+<br/>
+
+## 6. Infrastructure cleaning
+<a name="#6-infrastructure-cleaning"></a>
+
+To avoid unexpected fees, destroying the infrastructure after the completion of this lab is good practice.
+
+```terraform
+terraform plan -destroy
+terraform destroy -auto-approve
+```  
+
+<br/>
+<br/>
+<br/>
+
+## 7. Pricing
+<a name="#7-pricing"></a>
 The estimate below is based on the [AWS Pricing Calculator](https://calculator.aws).  
 
 | Service                            | Selected Option                   | Estimated Monthly*  | Justification |
