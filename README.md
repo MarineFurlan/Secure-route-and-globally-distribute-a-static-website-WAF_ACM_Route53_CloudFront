@@ -125,7 +125,7 @@ A serie of tests will now be executed to review the infrastructure and its integ
 <br/>
 
 <!-- Test diagram -->
-<img width="2395" height="957" alt="StaticWebsite_Distribution_test" src="https://github.com/user-attachments/assets/ae30c3c3-3d85-45e7-82f2-501069e5661a" />
+<img width="1597" height="638" alt="StaticWebsite_Distribution_test" src="https://github.com/user-attachments/assets/ae30c3c3-3d85-45e7-82f2-501069e5661a" />
 
 
 <br/>
