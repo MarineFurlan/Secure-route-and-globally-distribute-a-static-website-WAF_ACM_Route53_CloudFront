@@ -48,7 +48,7 @@ WAF is used to detect and block commo web attacks.
 
 ## 3. Architecture Overview
 <a name="#3-architecture-overview"></a>      
- <img width="2395" height="847" alt="StaticWebsite_Distribution" src="https://github.com/user-attachments/assets/92e4c9da-d734-4561-9af5-c79c1d4710ef" />
+ <img width="2395" height="846" alt="StaticWebsite_Distribution" src="https://github.com/user-attachments/assets/92e4c9da-d734-4561-9af5-c79c1d4710ef" />
 
 
 
