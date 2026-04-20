@@ -5,7 +5,7 @@ variable "bucket_name" {
 
 variable "domain" {
   type    = string
-  default = "furlan-cloudsecurity.fr"
+  default = "[your_domain_name]"
 }
 
 variable "waf_name" {
