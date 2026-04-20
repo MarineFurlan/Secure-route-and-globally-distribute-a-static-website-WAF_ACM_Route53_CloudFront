@@ -86,6 +86,8 @@ WAF is used to detect and block commo web attacks.
 <details>
 <summary>Step 1 - Clone this repo</summary> 
 
+<br/>
+
 ```terraform
 git clone https://github.com/MarineFurlan/Secure-route-and-globally-distribute-a-static-website-WAF_ACM_Route53_CloudFront.git
 cd Secure-route-and-globally-distribute-a-static-website-WAF_ACM_Route53_CloudFront
@@ -95,8 +97,29 @@ cd Secure-route-and-globally-distribute-a-static-website-WAF_ACM_Route53_CloudFr
 <br/> 
 
 <details>
-<summary>Step 2 - Initialize the infrastructure</summary>  
-  
+<summary>Step 2 - Review and complete variables.tf file</summary>  
+
+<br/>
+
+Change the default value of the domain variable, it must be the domain name you want to distribute your website on.
+
+<br/>
+
+```terraform
+variable "domain" {
+  type    = string
+  default = "[your_domain_name]"
+}
+```  
+</details>
+
+<br/>
+
+<details>
+<summary>Step 3 - Initialize the infrastructure</summary>  
+
+<br/>
+
 ```terraform
 terraform init
 terraform plan
@@ -108,10 +131,6 @@ terraform apply
 Apply complete!                                                                                                                                                                        
 ```
 </details>
-
-<br/>
-
-Step 3 -
 
 <br/>
 
