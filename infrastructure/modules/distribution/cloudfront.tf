@@ -39,6 +39,11 @@ resource "aws_cloudfront_distribution" "cdn" {
       query_string = false
       cookies { forward = "none" }
     }
+
+    function_association {
+      event_type   = "viewer-response"
+      function_arn = aws_cloudfront_function.security_headers.arn
+    }
   }
 
   viewer_certificate {
@@ -59,3 +64,12 @@ resource "aws_cloudfront_distribution" "cdn" {
 }
 
 
+##################################### ==== SECURITY HEADERS ==== #####################################
+
+resource "aws_cloudfront_function" "security_headers" {
+  name    = "security-headers"
+  runtime = "cloudfront-js-1.0"
+  comment = "Add security headers"
+
+  code = file("${path.module}/security_headers.js")
+}

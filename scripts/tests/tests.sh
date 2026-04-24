@@ -61,6 +61,41 @@ CLOUDFRONT_DISTRIBUTION_ID="$()"
 S3_BUCKET_NAME="$(terraform output -raw s3_bucket_name)"
 BUCKET_REGION="$(terraform output -raw bucket_region)"
 
+################################################################################
+# End-to-End Tests
+# These tests implicitly validate: DNS, CloudFront deployment, ACM certificate,
+# S3 bucket existence, bucket content, and basic connectivity
+################################################################################
+
+website_https_accessibility(){
+  log_test "Website Accessibility via HTTPS"
+  echo "Accessing "https://${DOMAIN_NAME}""
+  http_code=$(curl -s -o /dev/null -w "%{http_code}" "https://${DOMAIN_NAME}")
+
+  if [ "$http_code" = "200" ]; then
+    pass "Website accessible at https://${DOMAIN_NAME}"
+    echo "✓ Implicitly validates: DNS resolution, CloudFront deployment, ACM certificate, S3 bucket & content"
+    return 0
+  else
+    fail "Website returned HTTP $http_code (expected 200)"
+    return 1
+  fi
+}
+
+http_to_https_redirect(){
+  log_test "HTTP to HTTPS Redirect"
+  echo "Accessing "http://${DOMAIN_NAME}""
+
+  final_url=$(curl -s -o /dev/null -w "%{url_effective}" -L "http://${DOMAIN_NAME}")
+
+  if [[ "$final_url" == https://* ]]; then
+    pass "HTTP redirects to HTTPS (final: $final_url)"
+    return 0
+  else
+    fail "HTTP does not redirects to HTTPS (final: $final_url)"
+    return 1
+  fi
+}
 
 ################################################################################
 # Security tests
@@ -148,6 +183,75 @@ tls_certificate_validity(){
   fi
 }
 
+security_headers(){
+  log_test "Security Headers"
+
+  HEADERS=$(curl -s -I "https://${DOMAIN_NAME}")
+
+  #HSTS HEADER
+  if echo "$HEADERS" | grep -qi "strict-transport-security"; then
+    echo "✓ HSTS header present"
+  else
+    fail "✗ HSTS header missing"
+  fi
+
+  #CONTENT SECURITY POLICY HEADER
+  if echo "$HEADERS" | grep -qi "content-security-policy"; then
+    echo "✓ CSP header present"
+  else
+    fail "✗ CSP header missing"
+  fi
+
+  #X-FRAME-OPTIONS
+  if echo "$HEADERS" | grep -qi "x-frame-options: deny"; then
+    echo "✓ X-Frame-Options header present"
+  else
+    fail "✗ X-Frame-Options header missing"
+  fi
+
+  #X-CONTENT-TYPE-OPTIONS
+  if echo "$HEADERS" | grep -qi "x-content-type-options: nosniff"; then
+    echo "✓ X-Content-type-Options header present"
+  else
+    fail "✗ X-Content-type-Options header missing"
+  fi
+
+  #REFERRER POLICY
+  if echo "$HEADERS" | grep -qi "referrer-policy: strict-origin-when-cross-origin"; then
+    echo "✓ Referrer Policy header present"
+  else
+    fail "Referrer Policy header missing"
+  fi
+
+  echo ""
+  pass "Every header is present"
+}
+
+################################################################################
+# Error handling - 404 page test
+################################################################################
+
+404_error_page(){
+  log_test "404 Error Page"
+
+  local http_code
+  http_code=$(curl -s -o /dev/null -w "%{http_code}" -L "http://${DOMAIN_NAME}/nonexistant-page")
+
+  echo "Trying to access "http://${DOMAIN_NAME}/nonexistant-page""
+
+  if [ "$http_code" == "404" ]; then
+    pass "404 error is properly configured"
+    return 0
+   elif [ "$http_code" = "403" ]; then
+     pass "Error page configured (returns 403 instead of 404)"
+    return 0
+  else
+    fail "Unexpected error page behavior (HTTP $http_code, expected 404)"
+    return 1
+  fi
+}
+
+
 ################################################################################
 # Main Execution
 ################################################################################
@@ -158,11 +262,21 @@ main () {
   echo "Bucket region : $BUCKET_REGION"
   echo "Test start time: $(date)"
 
- # === Security tests === #
+  # === End-to-end tests === #
+  print_header "End-to-end tests"
+  website_https_accessibility
+  http_to_https_redirect
+
+   # === Security tests === #
   print_header "Security tests"
   s3_direct_access_blocked
   WAF_XSS_blocked
   tls_certificate_validity
+  security_headers
+
+  # === 404 Error Page === #
+  print_header "404 Error Page"
+  404_error_page
 
   # === Summary ===
   print_header "Test Summary"

@@ -57,12 +57,12 @@ WAF is used to detect and block commo web attacks.
 <br/>
 <br/>     
 
-| Components        | AWS Service                                                      | Role                                                          | 
-|-------------------|------------------------------------------------------------------|---------------------------------------------------------------|
-| **Distribution**  | CloudFront                                                       | Content delivery, caching, encrypted traffic with origin      |
-| **Security**      | WAF, ACM, S3 bucket policy                                       | In-flight website encryption, protection against common attacks and access control| 
-| **Routing**       | Route53                                                          | Routing dns requests                                          |                       
-| **Storage**       | S3                                                               | Website files storage                                         |
+| Components        | AWS Service                                                                         | Role                                                                                                  | 
+|-------------------|-------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| **Distribution**  | CloudFront                                                                          | Content delivery, caching, encrypted traffic with origin                                              |
+| **Security**      | WAF, ACM, S3 bucket policy, encryption at rest, object versioning, security headers | In-flight website encryption, protection against common attacks, access control and Disaster Recovery | 
+| **Routing**       | Route53                                                                             | Routing dns requests                                                                                  |                       
+| **Storage**       | S3                                                                                  | Website files storage                                                                                 |
 
 <br/>
 <br/>
