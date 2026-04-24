@@ -37,10 +37,11 @@ WAF is used to detect and block commo web attacks.
 ## 2. Design Decisions   
 <br/>
 
-| Components                                       | Justification                                                                               |
-|--------------------------------------------------|---------------------------------------------------------------------------------------------|
-| **Terraform**                                    | Reproducibility, version control, automated deployments, costs optimization                 | 
-| **Only common rules for WAF protection**         | Demonstration simplicity, FreeTier scope for this service                                   | 
+| Components                                | Justification                                                                                                                                                   |
+|-------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Terraform**                             | Reproducibility, version control, automated deployments, costs optimization                                                                                     | 
+| **Only common rules for WAF protection**  | Demonstration simplicity, FreeTier scope for this service                                                                                                       |
+| **WAF testing with cross-site scripting** | Demonstration simplicity, multiple pentest (as DDOS or Flood attacks are prohibited by AWS) |
 
 <br/>
 <br/>
@@ -90,7 +91,7 @@ WAF is used to detect and block commo web attacks.
 
 ```terraform
 git clone https://github.com/MarineFurlan/Secure-route-and-globally-distribute-a-static-website-WAF_ACM_Route53_CloudFront.git
-cd Secure-route-and-globally-distribute-a-static-website-WAF_ACM_Route53_CloudFront
+cd infrastructure
 ```
 </details>
 

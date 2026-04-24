@@ -4,3 +4,4 @@ output "hosted_zone_id" { value = aws_cloudfront_distribution.cdn.hosted_zone_id
 output "origin_access_control_id" { value = aws_cloudfront_origin_access_control.oac.id }
 output "aliases" { value = aws_cloudfront_distribution.cdn.aliases }
 output "cloudfront_id" { value = aws_cloudfront_distribution.cdn.id}
+output "website_domain" { value = aws_acm_certificate.cert.domain_name}
