@@ -168,7 +168,32 @@ A serie of tests will now be executed to review the infrastructure and its integ
 bash tests.sh
 ```
 ```bash
-# Expected results                                                                                                                                                           
+# Expected results
+
+========================================
+Infrastructure Integrity Tests
+========================================
+Domain : [your_domain_name]
+Bucket region : eu-west-3
+Test start time: XXXXXX
+
+========================================
+End-to-end tests
+========================================
+
+TEST #1: Website Accessibility via HTTPS 
+
+[...]  
+
+========================================
+Test Summary
+========================================
+Test End Time: XXXXXX
+
+Total Tests:  7
+Passed:       7
+Failed:       0
+                                                                                                                                                        
 ```
 </details>
 
