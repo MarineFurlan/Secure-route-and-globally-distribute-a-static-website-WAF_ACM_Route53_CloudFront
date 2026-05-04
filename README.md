@@ -254,6 +254,7 @@ Potential enhancements to the infrastructure include:
 - Adding WAF rules (ex: geo-blocking rules, custom rules)
 - Adding CloudWatch alarms for suspicious activity
 - Enabling resources logging
+- Allowing testing one test at a time for debugging purposes
  
 
 <br/>
