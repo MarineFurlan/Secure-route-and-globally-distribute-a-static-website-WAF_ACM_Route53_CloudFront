@@ -129,7 +129,19 @@ terraform apply
 ```terraform
 # Expected result in CLI
 
-Apply complete!                                                                                                                                                                        
+Apply complete!
+
+Outputs:                                                                                                                                                                                                                            
+
+bucket_region = "eu-west-3"
+cloudfront_aliases = toset([
+  "[your_domain_name]",
+  "www.[your_domain_name]",
+])
+cloudfront_id = "XXXXXX"
+oac_id = "XXXXXX"
+s3_bucket_name = "secure-static-website-001"
+website_domain = "[your_domain_name]"
 ```
 </details>
 
