@@ -211,6 +211,8 @@ The estimate below is based on the [AWS Pricing Calculator](https://calculator.a
 <a name="#8-improvements--next-steps"></a>
 
 Potential enhancements to the infrastructure include:  
+- Encrypting s3 bucket with KMS key
+- Tagging every resource to analyze AWS spend by project
  
 
 <br/>
