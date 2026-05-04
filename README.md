@@ -211,8 +211,12 @@ The estimate below is based on the [AWS Pricing Calculator](https://calculator.a
 <a name="#8-improvements--next-steps"></a>
 
 Potential enhancements to the infrastructure include:  
-- Encrypting s3 bucket with KMS key
+- Encrypting s3 bucket at rest with KMS key
+- Enabling bucket versioning
 - Tagging every resource to analyze AWS spend by project
+- Adding WAF rules (ex: geo-blocking rules, custom rules)
+- Adding CloudWatch alarms for suspicious activity
+- Enabling resources logging
  
 
 <br/>
