@@ -1,16 +1,15 @@
-variable "bucket_name" {
+variable "waf_name" {
   type    = string
-  default = "secure-static-website-001"
+  default = "prod-web-acl"
 }
 
 variable "domain" {
   type    = string
-  default = "furlan-cloudsec.fr"
 }
 
-variable "waf_name" {
+variable "bucket_name" {
   type    = string
-  default = "prod-web-acl"
+  default = "secure-static-website-001"
 }
 
 variable "price_class" {

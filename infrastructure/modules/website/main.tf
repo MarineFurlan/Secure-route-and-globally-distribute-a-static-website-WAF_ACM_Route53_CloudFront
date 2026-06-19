@@ -39,13 +39,13 @@ resource "aws_s3_bucket_ownership_controls" "site" {
 }
 
 ### === UPLOAD FILES === ###
-locals { website_files = fileset("${path.module}/../../../website", "**") }
+locals { website_files = fileset("${path.module}/../../../website_files", "**") }
 
 resource "aws_s3_object" "website_files" {
   for_each = {for f in local.website_files : f => f}
   bucket   = aws_s3_bucket.site.id
   key      = each.key
-  source   = "${path.module}/../../../website/${each.value}"
+  source   = "${path.module}/../../../website_files/${each.value}"
 
   content_type = lookup({
     html = "text/html"
