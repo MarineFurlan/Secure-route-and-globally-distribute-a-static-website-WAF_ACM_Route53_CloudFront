@@ -301,7 +301,8 @@ Potential enhancements to the infrastructure include:
 │   ├── variables.tf
 │   ├── outputs.tf
 │   └── modules/
-├── tests.sh                     # Infrastructure validation tests file
+├── scripts/
+│   ├── tests.sh                 # Infrastructure validation tests file
 └── README.md                    # This file
 ```
 <br/>
