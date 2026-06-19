@@ -1,6 +1,6 @@
 # Secure, route and globally distribute a static website : WAF + ACM + Route53 + CloudFront
 
-**Status :** 🟡 In progress
+**Status :** 🟢 Done
 <br/>
 <br/>
 <img width="107" height="60" alt="Amazon-Web-Services-AWS-Logo" src="https://github.com/user-attachments/assets/f7829385-3361-48fc-8099-849da5534de5" />
