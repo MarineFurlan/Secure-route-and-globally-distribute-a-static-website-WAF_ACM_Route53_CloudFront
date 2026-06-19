@@ -99,7 +99,6 @@ cd infrastructure
 
 <details>
 <summary>Step 2 - Add your website files in a folder named "website_files" at the root of this lab hierarchy</summary> 
-</details>
 
 <br/>
 
