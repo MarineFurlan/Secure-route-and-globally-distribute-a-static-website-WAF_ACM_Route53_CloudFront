@@ -98,19 +98,22 @@ cd infrastructure
 <br/> 
 
 <details>
-<summary>Step 2 - Review and complete variables.tf file</summary>  
+<summary>Step 2 - Add your website files in a folder named "website_files" at the root of this lab hierarchy</summary> 
+</details>
+
+<br/> 
+
+<details>
+<summary>Step 2 - Complete "terraform.tfvars" file with the domain name you would like to use</summary>  
 
 <br/>
 
-Change the default value of the domain variable, it must be the domain name you want to distribute your website on.
+It must be the domain name you want to distribute your website on.
 
 <br/>
 
 ```terraform
-variable "domain" {
-  type    = string
-  default = "[your_domain_name]"
-}
+domain = [your_domain_name]
 ```  
 </details>
 
