@@ -49,7 +49,8 @@ WAF is used to detect and block commo web attacks.
 
 ## 3. Architecture Overview
 <a name="#3-architecture-overview"></a>      
-<img width="1597" height="565" alt="StaticWebsite_Distribution" src="https://github.com/user-attachments/assets/4851dabc-b1cb-47c0-bca2-e68f205efc0b" />
+<img width="1597" height="565" alt="Secure-route-and-globally-distribute-a-static-website-WAF_ACM_Route53_CloudFront_02" src="https://github.com/user-attachments/assets/69ce8bbb-0715-4449-9ae5-0f4057558267" />
+
 
 
 
@@ -103,12 +104,12 @@ cd infrastructure
 <br/>
 
 ```bash
-This_lab/
- |__ infrastructure/
- |__ scripts/
- |__ website_files/
-      |__ index.html
-      |__ ...
+├── infrastructure/            
+├── website/                     # Add this folder
+│   └── index.html
+│   └── ...
+├── tests.sh                 
+└── README.md                    
 ```
 </details>
 
@@ -300,7 +301,6 @@ Potential enhancements to the infrastructure include:
 │   ├── variables.tf
 │   ├── outputs.tf
 │   └── modules/
-├── website/                     # generic website files
 ├── tests.sh                     # Infrastructure validation tests file
 └── README.md                    # This file
 ```
