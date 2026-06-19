@@ -17,7 +17,6 @@
 - [Pricing](#7-pricing)
 - [Improvements & Next Steps](#8-improvements--next-steps)
 - [References](#9-references)
-- [Repository Structure](#10-repo-structure)
 <br/>
 <br/>
 <br/>
@@ -220,9 +219,13 @@ Failed:       0
 ## 5. Results
 <a name="#5-results"></a>
 
-Infrastructure overview :
+The static website is now deployed and publicly accessible over HTTPS and distributed globally via CloudFront.
 
-<!-- Infrastructure screenshots -->
+- The site responds over HTTPS at `[your-domain]`, with a valid certificate and automatic renewal managed by ACM.
+- Content is cached and distributed globally, reducing latency for visitors regardless of their location.
+- The origin S3 bucket is fully private, only the authorized CloudFront distribution can access it.
+- Traffic passes through an active WAF before reaching the application.
+
 
 <br/>
 <br/>
@@ -292,22 +295,6 @@ Potential enhancements to the infrastructure include:
 <br/>
 <br/>
 
-## 10. Repository Structure
-<a name="#10-repo-structure"></a> 
-
-```bash
-├── infrastructure/              # IaC code
-│   ├── main.tf
-│   ├── variables.tf
-│   ├── outputs.tf
-│   └── modules/
-├── scripts/
-│   ├── tests.sh                 # Infrastructure validation tests file
-└── README.md                    # This file
-```
-<br/>
-<br/>
-<br/>
 
 ## Author
 **Furlan Marine - Certified AWS Solutions Architect - Associate** \
