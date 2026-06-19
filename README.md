@@ -101,10 +101,22 @@ cd infrastructure
 <summary>Step 2 - Add your website files in a folder named "website_files" at the root of this lab hierarchy</summary> 
 </details>
 
+<br/>
+
+```bash
+This_lab/
+ |__ infrastructure/
+ |__ scripts/
+ |__ website_files/
+      |__ index.html
+      |__ ...
+```
+</details>
+
 <br/> 
 
 <details>
-<summary>Step 2 - Complete "terraform.tfvars" file with the domain name you would like to use</summary>  
+<summary>Step 3 - Complete "terraform.tfvars" file with the domain name you would like to use</summary>  
 
 <br/>
 
@@ -120,11 +132,12 @@ domain = [your_domain_name]
 <br/>
 
 <details>
-<summary>Step 3 - Initialize the infrastructure</summary>  
+<summary>Step 4 - Initialize the infrastructure</summary>  
 
 <br/>
 
 ```terraform
+cd infrastructure/
 terraform init
 terraform plan
 terraform apply
@@ -151,7 +164,7 @@ website_domain = "[your_domain_name]"
 <br/>
 
 <details>
-<summary>Step 4 - Deployment validation</summary>
+<summary>Step 5 - Deployment validation</summary>
 
 <br/>
 
